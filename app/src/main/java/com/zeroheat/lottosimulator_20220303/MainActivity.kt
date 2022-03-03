@@ -106,42 +106,41 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    private fun  checkLottoRank(){
-
+    private fun  checkLottoRank() {
 
 
 //        내 번호 목록 / 당첨 번호 목록중, 같은 숫자가 몇개?
         var correctCount = 0
 
 //        내 번호를 하나씩 조회
-        for (myNum in mMyNumbers){
+        for (myNum in mMyNumbers) {
 
 //            당첨번호를 맞췄는가? = > 당첨 번호 목록에 내 번호가 들어있나?
-            if(mWinNumberList.contains(myNum))
+            if (mWinNumberList.contains(myNum)) {
                 correctCount++
             }
-        when (correctCount){
+        }
+
+        //        맞춘 갯수에 따른 등수 판정
+        when (correctCount) {
             6 -> {
-                Toast.makeText(this,"1등입니다.",Toast.LENGTH_SHORT)
+                Toast.makeText(this, "1등입니다.", Toast.LENGTH_SHORT)
             }
             5 -> {
-                Toast.makeText(this,"임시-3등입니다..",Toast.LENGTH_SHORT)
+                Toast.makeText(this, "임시-3등입니다..", Toast.LENGTH_SHORT)
             }
             4 -> {
-                Toast.makeText(this,"4등입니다.",Toast.LENGTH_SHORT)
+                Toast.makeText(this, "4등입니다.", Toast.LENGTH_SHORT)
             }
             3 -> {
-                Toast.makeText(this,"5등입니다.",Toast.LENGTH_SHORT)
+                Toast.makeText(this, "5등입니다.", Toast.LENGTH_SHORT)
             }
             else -> {
-                Toast.makeText(this,"낙첨입니다.",Toast.LENGTH_SHORT)
+                Toast.makeText(this, "낙첨입니다.", Toast.LENGTH_SHORT)
             }
 
 
         }
-
-//        맞춘 갯수에 따른 등수 판정
-
 
 
     }
