@@ -8,6 +8,12 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
+//    내번호 6개
+//    코틀린은 단순 배열 초기화  int[] arr = {}; 문법 지원 X
+
+//    숫자 목록을 파라미터로 넣으면 > Array로 만들어주는 함수 실행
+   val mMyNumbers = arrayOf(1,8,13,16,40,45)
+
     //    컴퓨터가 뽑은 당첨번호 6개를 저장할 ArrayList
     val mWinNumberList = ArrayList<Int>()
     var mBonusNum = 0 // 보너스번호는, 매 판마다 새로 뽑아야함. 변경소지 O, 화면이 어딘지는 줄 필요 X. 바로 대입 var
