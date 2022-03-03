@@ -6,6 +6,7 @@ import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
+import java.text.NumberFormat
 
 class MainActivity : AppCompatActivity() {
 
@@ -26,6 +27,14 @@ class MainActivity : AppCompatActivity() {
     var mUsedMoney = 0
     var mEarnMoney = 0L // 30억 이상의 당첨 대비. Long 타입으로 설정.
 
+//    각 등수별 횟수 카운팅 변수
+    var rankCount1 = 0
+    var rankCount2 = 0
+    var rankCount3 = 0
+    var rankCount4 = 0
+    var rankCount5 = 0
+    var rankCountFail = 0
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,7 +42,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setupEvents()
         setValues()
-        checkLottoRank()
     }
 
     private fun setupEvents(){
@@ -113,11 +121,14 @@ class MainActivity : AppCompatActivity() {
 //        텍스트뷰에 배치
 
         txtBonusNum.text = mBonusNum.toString()
-
+        //        내 숫자 6개와 비교, 등수 판정
+        checkLottoRank()
     }
 
 
-    private fun  checkLottoRank() {
+
+
+    private fun checkLottoRank() {
 
 
 //        내 번호 목록 / 당첨 번호 목록중, 같은 숫자가 몇개?
@@ -137,6 +148,7 @@ class MainActivity : AppCompatActivity() {
             6 -> {
 //                30억을 번 금액으로 추가
                 mEarnMoney += 3000000000
+                rankCount1 ++
             }
 
             5 -> {
@@ -144,21 +156,41 @@ class MainActivity : AppCompatActivity() {
 
                 if (mMyNumbers.contains(mBonusNum)) {
                     mEarnMoney += 50000000
-
+                    rankCount2 ++
                    } else {
                     mEarnMoney += 2000000
+                    rankCount3 ++
                    }
 
             }
             4 -> {
                 mEarnMoney += 50000
+                rankCount4 ++
             }
             3 -> {
 //                5등 -> 5천원을 사용한 돈을 줄여주자.
                 mUsedMoney -= 5000
+                rankCount5 ++
             }
-
+            else -> {
+                rankCountFail ++
+            }
         }
+
+//        사용 금액 / 당첨 금액을 텍스트뷰에 각각 반영
+
+        txtUsedMoney.text = "${NumberFormat.getInstance().format(mUsedMoney)} 원"
+        txtEarnMoney.text = "${NumberFormat.getInstance().format(mEarnMoney)} 원"
+
+//        등수별 횟수도 텍스트뷰에 반영
+
+        txtRankCount1.text = "${rankCount1}회"
+        txtRankCount2.text = "${rankCount2}회"
+        txtRankCount3.text = "${rankCount3}회"
+        txtRankCount4.text = "${rankCount4}회"
+        txtRankCount5.text = "${rankCount5}회"
+        txtRankCountFail.text = "${rankCountFail}회"
+
 
 
     }
