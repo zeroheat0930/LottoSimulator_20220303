@@ -2,6 +2,8 @@ package com.zeroheat.lottosimulator_20220303
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
@@ -35,7 +37,30 @@ class MainActivity : AppCompatActivity() {
     var rankCount5 = 0
     var rankCountFail = 0
 
+//    Handler로 쓰레드에 할일 할당 (postDelayed - 일정 시간 지난 뒤에 할일을 할당)
+    lateinit var mHandler: Handler
 
+//    핸들러가 반복 실행할 코드를, 인터페이스를 이용해서 변수로 저장.
+    val buyLottoRunnable = object : Runnable{
+    override fun run() {
+//        물려받은 추상메쏘드 구현
+//        할 일이 어떤건지 적는 함수
+
+//        쓴 돈이 1천만원이 안된다면 추가 구매
+        if(mUsedMoney <= 10000000){
+            buyLotto()
+
+//            핸들러에게 다음 할일로, 이코드를 다시 등록
+            mHandler.post(this)
+        }
+//        그렇지 않다면, 할일 정지
+        else{
+            Toast.makeText(this@MainActivity, "자동 구매가 완료됬습니다.", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+
+}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,18 +74,10 @@ class MainActivity : AppCompatActivity() {
 
         btnBuyRandom.setOnClickListener {
 //            처음 눌리면 > 반복 구매 시작 > 1천만원
+//            1회 로또 구매 명령 > 완료 되면 다시 1회 로또 구매 > ... 연속 클릭을 자동으로 하는 느낌
 
-
-//            단순 반복 > 반복 속도가 너무 빨라서, UI가 멈춘것처럼 보인다.
-            while (true){
-
-                buyLotto()
-
-                if (mUsedMoney >= 10000000){
-                    break
-                }
-
-            }
+//            핸들러에게, 할일로 처음 등록(할일 시작)
+            mHandler.post(buyLottoRunnable)
 
 //            반복 구매중에 눌리면 > 반복 종료
         }
@@ -219,6 +236,10 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun setValues() {
+
+
+//        반복을 담당할 핸들러를 생성
+        mHandler = Handler(Looper.getMainLooper())
 
         mWinNumTextViewList.add(txtWinNum01)
         mWinNumTextViewList.add(txtWinNum02)
