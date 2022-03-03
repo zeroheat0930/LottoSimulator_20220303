@@ -166,11 +166,6 @@ class MainActivity : AppCompatActivity() {
 
 
 
-
-
-
-
-
     private fun setValues() {
 
         mWinNumTextViewList.add(txtWinNum01)
