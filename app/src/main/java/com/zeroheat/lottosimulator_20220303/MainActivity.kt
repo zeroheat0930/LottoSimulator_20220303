@@ -78,7 +78,6 @@ class MainActivity : AppCompatActivity() {
 
 //            핸들러에게, 할일로 처음 등록(할일 시작)
             mHandler.post(buyLottoRunnable)
-
 //            반복 구매중에 눌리면 > 반복 종료
         }
 
